@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FizzBuzz.Objects.Interfaces;
 
 namespace FizzBuzz.Objects
 {
     public class FizzBuzzer
     {
-        private readonly IDictionary<Func<int, bool>, string> _rules;
+        private readonly IRulesEngine _rulesEngine;
 
-        public FizzBuzzer(IDictionary<Func<int, bool>, string> rules)
+        public FizzBuzzer(IRulesEngine rulesEngine)
         {
-            _rules = rules;
+            _rulesEngine = rulesEngine;
         }
 
         public string Process(int number)
         {
-            foreach (var predicate in _rules.Keys)
+            foreach (var rule in _rulesEngine.Rules)
             {
-                if (predicate(number))
+                if (rule(number))
                 {
-                    return _rules[predicate];
+                    return _rulesEngine.GetOutput(rule);
                 }
             }
 
